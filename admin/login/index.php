@@ -19,11 +19,12 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   if ($user == null && $pass == null) {
     header('location:../extend/alerta.php?msj=El formato no es correcto&c=salir&p=salir&t=error');
   }else {
-    $sel = $con->query("SELECT nombre, apellido1, apellido2, email, password, id_perfil, id_tipo, id_sucursal, foto
+    $sel = $con->query("SELECT id, nombre, apellido1, apellido2, email, password, id_perfil, id_tipo, id_sucursal, foto
       FROM ejecutivo WHERE borrado= 0 AND activo = 1 AND email = '$usuario' AND password = '$pass2' ");
        $row = mysqli_num_rows($sel);
        if ($row == 1) {
          if ($var = $sel->fetch_assoc()) {
+            $id = $var['id'];
             $nombre = $var['nombre'];
             $apellido1 = $var['apellido1'];
             $apellido2 = $var['apellido2'];
@@ -35,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
             $foto = $var['foto'];
          }
          if ($email == $usuario && $password == $pass2) {
+            $_SESSION ['id'] = $id;
             $_SESSION ['nombre'] = $nombre;
             $_SESSION ['apellido1'] = $apellido1;
             $_SESSION ['apellido2'] = $apellido2;

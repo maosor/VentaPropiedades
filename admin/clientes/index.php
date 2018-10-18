@@ -2,36 +2,7 @@
 
 <div class="row">
   <div class="col s12">
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">Alta de clientes</span>
-        <form class="form" action="ins_clientes.php" method="post" autocomplete=off >
-          <div class="input-field">
-            <input type="text" name="nombre"  title="Solo letras" pattern="[A-Z/s ]+"  id="nombre" onblur="may(this.value, this.id)"  >
-            <label for="nombre">Nombre</label>
-          </div>
-          <div class="input-field">
-            <input type="text" name="direccion"    id="direccion" onblur="may(this.value, this.id)"  >
-            <label for="direccion">Dirección</label>
-          </div>
-          <div class="input-field">
-            <input type="text" name="telefono"   id="telefono"  >
-            <label for="telefono">Telefono</label>
-          </div>
-          <div class="input-field">
-            <input type="email" name="correo"   id="correo"   >
-            <label for="email">Correo</label>
-          </div>
-          <button type="submit" class="btn" >Guardar</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col s12">
-    <nav class="brown lighten-3" >
+    <nav class="blue lighten-4" >
       <div class="nav-wrapper">
         <div class="input-field">
           <input type="search"   id="buscar" autocomplete="off"  >
@@ -42,48 +13,48 @@
     </nav>
   </div>
 </div>
-
 <?php
-if ($_SESSION['nivel']== 'ADMINISTRADOR') {
-  $sel= $con->prepare("SELECT id, nombre, direccion, telefono, correo, asesor FROM clientes ");
-}else {
-  $sel = $con->prepare("SELECT id, nombre, direccion, telefono, correo, asesor FROM clientes  WHERE asesor = ? ");
-  $sel->bind_param('s', $_SESSION['nombre']);
-}
+$estado = 'Activo';
+$sel = $con->prepare("SELECT id_cliente, fecha_ingreso,c.nombre,telefono1, telefono2, c.email, e.nombre FROM cliente c
+  INNER JOIN ejecutivo e ON c.id_ejecutivo_asignado = e.id  WHERE estatus = ?");
+$sel -> bind_param ('s', $estado);
 $sel -> execute();
 $sel-> store_result();
-$sel -> bind_result($id, $nombre, $direccion, $telefono, $correo, $asesor);
+$sel -> bind_result($id, $fecha, $nombre, $telefono1, $telefono2, $email, $ejecutivo );
 $row = $sel->num_rows;
  ?>
  <div class="row">
    <div class="col s12 ">
      <div class="card">
        <div class="card-content">
-         <span class="card-title">Clientes(<?php echo $row?>)</span>
-         <table>
+         <span class="card-title">Clientes (<?php echo $row?>)</span>
+         <table id="tbldatos">
            <thead>
              <tr class="cabecera">
+               <th>#</th>
+               <th>Fecha</th>
                <th>Nombre</th>
-               <th>Dirección</th>
-               <th>Telefono</th>
-               <th>Correo</th>
-               <th>Asesor</th>
-               <th>Nuevo</th>
+               <th>Telefono1</th>
+               <th>Telefono2</th>
+               <th>Email</th>
+               <th>Ejecutivo</th>
                <th></th>
                <th></th>
+               <th><a href="ingreso_cliente.php" class="btn-floating green right"><i
+                class="material-icons">add</i></a></th>
 
              </tr>
            </thead>
            <?php while ($sel->fetch()) { ?>
             <tr>
-              <td><?php echo $nombre ?></td>
-              <td><?php echo $direccion ?></td>
-              <td><?php echo $telefono ?></td>
-              <td><?php echo $correo ?></td>
-              <td><?php echo $asesor ?></td>
-              <td> <a href="../propiedades/alta_propiedades.php?id=<?php echo $id ?>&nombre=<?php echo $nombre ?>" class="btn-floating green"> <i class="material-icons">add</i></a>
-              </td>
-              <td> <a href="editar_cliente.php?id=<?php echo $id ?>" class="btn-floating blue"> <i class="material-icons">loop</i></a>
+              <td><?php echo $id?></td>
+              <td><?php echo $fecha?></td>
+              <td><?php echo $nombre?></td>
+              <td><?php echo $telefono1?></td>
+              <td><?php echo $telefono2?></td>
+              <td><?php echo $email ?></td>
+              <td><?php echo $ejecutivo ?></td>
+              <td> <a href="ingreso_cliente.php?id=<?php echo $id ?>" class="btn-floating blue"> <i class="material-icons">edit</i></a>
               </td>
               <td>
                 <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el cliente?',text: 'Al eliminarlo no podrá recuperarlo!',
