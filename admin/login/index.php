@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
              header('location:../extend/alerta.php?msj=No tienes el permiso para entrar&c=salir&p=salir&t=error');
          }
        }else {
-         header('location:../extend/alerta.php?msj=Nombre de usuario o contraseña incorrecto '.$row.$usuario.$pass2.'&c=salir&p=salir&t=error');
+         header('location:../extend/alerta.php?msj=Nombre de usuario o contraseña incorrecto...&c=salir&p=salir&t=error');
        }
   }
 }else {

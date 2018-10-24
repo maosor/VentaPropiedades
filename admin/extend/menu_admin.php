@@ -25,6 +25,9 @@
     <li><div class="divider"></div></li>
     <li><a href="../clientes"><i class="material-icons">people</i>Clientes</li></a>
     <li><div class="divider"></div></li>
+    <li><a href="../contactos"><i class="material-icons">perm_contact_calendar</i>Contactos</li></a>
+    <li><div class="divider"></div></li>
+
     <!-- <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">work</i>PROPIEDADES
       <i class="material-icons right">arrow_drop_down</i></a></li>
     <li><div class="divider"></div></li> -->

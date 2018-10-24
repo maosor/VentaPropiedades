@@ -68,11 +68,11 @@ if (isset($_GET['id']))
           </div>
           <!-- <div class="validacion"> </div> -->
           <div class="input-field col m4 s6">
-            <input type="text" name="email" id="email" onblur="may(this.value, this.id)" value="<?php echo $email?>"  >
+            <input type="email" name="email" id="email" onblur="may(this.value, this.id)" value="<?php echo $email?>"  >
             <label for="email">Email</label>
           </div>
           <div class="input-field col m4 s6">
-            <input type="text" name="presupuesto_maximo" id="presupuesto_maximo" title="Solo números" pattern="[0-9/s ]+"value="<?php echo $presupuesto_maximo?>"  >
+            <input type="number" name="presupuesto_maximo" id="presupuesto_maximo" title="Solo números" pattern="[0-9/s ]+"value="<?php echo $presupuesto_maximo?>"  >
             <label for="presupuesto_maximo">Presupuesto Máximo</label>
           </div>
           <div class="input-field col m4 s6">

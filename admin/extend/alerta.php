@@ -38,6 +38,12 @@
       case 'cli':
         $carpeta = '../clientes/';
         break;
+      case 'con':
+          $carpeta = '../contactos/';
+          break;
+      case 'com':
+          $carpeta = '../comentarios/';
+          break;
       case 'prop':
         $carpeta = '../propiedades/';
         break;

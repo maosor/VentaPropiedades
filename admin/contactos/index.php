@@ -15,32 +15,34 @@
 </div>
 <?php
 $estado = 'Activo';
-$sel = $con->prepare("SELECT id_cliente, fecha_ingreso,c.nombre,telefono1, telefono2, c.email, e.nombre FROM cliente c
-  INNER JOIN ejecutivo e ON c.id_ejecutivo_asignado = e.id  WHERE estatus = ?");
-$sel -> bind_param ('s', $estado);
+$sel = $con->prepare("SELECT id_contacto, nombre, telefono_casa,telefono_oficina,telefono_celular,
+                      fax,email,es_corredor,email2  FROM contacto ");
 $sel -> execute();
 $sel-> store_result();
-$sel -> bind_result($id, $fecha, $nombre, $telefono1, $telefono2, $email, $ejecutivo );
+$sel -> bind_result($id, $nombre, $telefono_casa,$telefono_oficina,$telefono_celular,
+                      $fax,$email,$es_corredor,$email2 );
 $row = $sel->num_rows;
  ?>
  <div class="row">
    <div class="col s12 ">
      <div class="card">
        <div class="card-content">
-         <span class="card-title">Clientes (<?php echo $row?>)</span>
+         <span class="card-title">Contactos (<?php echo $row?>)</span>
          <table id="tbldatos">
            <thead>
              <tr class="cabecera">
                <th>#</th>
-               <th>Fecha</th>
                <th>Nombre</th>
-               <th>Telefono1</th>
-               <th>Telefono2</th>
+               <th>Telefono<br>Casa</th>
+               <th>Telefono<br>Oficina</th>
+               <th>Telefono<br>Celular</th>
+               <th>Fax</th>
                <th>Email</th>
-               <th>Ejecutivo</th>
+               <th>Email2</th>
+               <th>¿Corredor?</th>
                <th></th>
                <th></th>
-               <th><a href="ingreso_cliente.php" class="btn-floating green right"><i
+               <th><a href="ingreso_contacto.php" class="btn-floating green right"><i
                 class="material-icons">add</i></a></th>
 
              </tr>
@@ -48,22 +50,21 @@ $row = $sel->num_rows;
            <?php while ($sel->fetch()) { ?>
             <tr>
               <td><?php echo $id?></td>
-              <td><?php echo $fecha?></td>
               <td><?php echo $nombre?></td>
-              <td><?php echo $telefono1?></td>
-              <td><?php echo $telefono2?></td>
+              <td><?php echo $telefono_casa?></td>
+              <td><?php echo $telefono_oficina?></td>
+              <td><?php echo $telefono_celular?></td>
+              <td><?php echo $fax ?></td>
               <td><?php echo $email ?></td>
-              <td><?php echo $ejecutivo ?></td>
-              <td> <a href="../comentarios/index.php?id=<?php echo $id ?>" class="btn-floating pink darken-4"> <i class="material-icons">insert_comment</i></a>
-              <td> <a href="ingreso_cliente.php?id=<?php echo $id ?>" class="btn-floating blue"> <i class="material-icons">edit</i></a>
+              <td><?php echo $email2 ?></td>
+              <td><?php echo $es_corredor==1?"Sí":"No" ?></td>
+              <td> <a href="ingreso_contacto.php?id=<?php echo $id ?>" class="btn-floating blue"> <i class="material-icons">edit</i></a>
               </td>
               <td>
-                <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el cliente?',text: 'Al eliminarlo no podrá recuperarlo!',
+                <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el contacto?',text: 'Al eliminarlo no podrá recuperarlo!',
                   type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
-                }).then((result) => { if (result.value){location.href='eliminar_cliente.php?id=<?php echo $id ?>';}})"><i class="material-icons">clear</i></a>
+                }).then((result) => { if (result.value){location.href='eliminar_contacto.php?id=<?php echo $id ?>';}})"><i class="material-icons">clear</i></a>
               </td>
-
-
             </tr>
           <?php }
           $sel->close();
