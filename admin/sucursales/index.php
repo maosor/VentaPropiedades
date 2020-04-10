@@ -14,7 +14,7 @@
   </div>
 </div>
 <?php
-$sel = $con->prepare("SELECT id, nombre,Telefono FROM sucursal ");
+$sel = $con->prepare("SELECT idSucursal, nombre,Telefono FROM sucursal ");
 $sel -> execute();
 $sel-> store_result();
 $sel -> bind_result($id, $nombre, $telefono );

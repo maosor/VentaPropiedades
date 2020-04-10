@@ -44,7 +44,7 @@ if (isset($_GET['id']))
                   <option value="0" selected disabled>SELECCIONE UN PERFIL</option>
                <?php endif; ?>
                <?php
-               $sel_per = $con->prepare("SELECT id, descripcion FROM perfil ");
+               $sel_per = $con->prepare("SELECT idPerfil, descripcion FROM perfil ");
                $sel_per->execute();
                $sel_per->bind_result( $id, $descripcion_perfil);
                 ?>

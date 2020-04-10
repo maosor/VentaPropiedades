@@ -1,7 +1,7 @@
 <?php
 include '../extend/header.php';
 $id = htmlentities($_GET['id']);
-$del = $con->prepare("DELETE FROM sucursal WHERE id = ?");
+$del = $con->prepare("DELETE FROM sucursal WHERE idSucursal = ?");
 $del -> bind_param('i', $id);
 
 if ($del -> execute()) {

@@ -2,7 +2,7 @@
 function Perfil_ejecutivo($id)
 {
   include '../conexion/conexion.php';
-  $sel = $con->prepare("SELECT descripcion FROM perfil WHERE id = ? ");
+  $sel = $con->prepare("SELECT descripcion FROM perfil WHERE idPerfil = ? ");
   $sel->bind_param('i', $id);
   $sel->execute();
   $sel->bind_result($descripcion);

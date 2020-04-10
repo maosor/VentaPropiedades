@@ -24,6 +24,7 @@
        <th data-column-id="Telefono2">Telefono2</th>
        <th data-column-id="nombreEjecutivo">Ejecutivo</th>
        <th data-column-id="email">Email</th>
+       <th data-column-id="Estatus">Estatus</th>
 
        <th data-column-id="commands" data-formatter="commands" data-sortable="false"></th>
       </tr>
@@ -84,7 +85,7 @@ $(document).ready(function(){
    if(confirm("¿Esta seguro de borrar el cliente?"))
    {
      var idCliente = $(this).data("row-id");
-     alert('Borrar de cliente #'+idCliente);
+     window.location.href = "eliminar_cliente.php?id="+idCliente;
    }
    else{
     return false;

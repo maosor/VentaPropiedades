@@ -15,7 +15,7 @@
 </div>
 <?php
 $sel = $con->prepare("SELECT e.idEjecutivo,Nombre,Apellido1,Apellido2,email,p.descripcion,t.descripcion, TelefonoPrincipal
-  FROM ejecutivo e INNER JOIN perfil p ON (e.idPerfil = p.id) INNER JOIN tipoejecutivo t ON(e.idTipo = t.idTipoEjecutivo) WHERE Borrado = 0 ");
+  FROM ejecutivo e INNER JOIN perfil p ON (e.idPerfil = p.idPerfil) INNER JOIN tipoejecutivo t ON(e.idTipo = t.idTipoEjecutivo) WHERE Borrado = 0 ");
 $sel -> execute();
 $sel-> store_result();
 $sel -> bind_result($id, $nombre, $apellido1, $apellido2, $email, $perfil,$tipo,$telefono_principal );

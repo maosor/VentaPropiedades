@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   $variable = "$".$campo."='".htmlentities($valor)."';";
   eval($variable);
   }
-  $up = $con->prepare("UPDATE sucursal SET nombre=?, telefono=? WHERE id=? ");
+  $up = $con->prepare("UPDATE sucursal SET nombre=?, telefono=? WHERE idSucursal =? ");
   $up->bind_param('ssi', $nombre, $telefono, $id);
     if ($up -> execute()) {
     header('location:../extend/alerta.php?msj=Sucursal actualizado&c=suc&p=in&t=success');

@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   }
 $id='';
 $estatus= 'Activo';
-$id_ejecutivo_agrego = $_SESSION['id'];
+$id_ejecutivo_agrego = $_SESSION['idEjecutivo'];
 $ins = $con->prepare("INSERT INTO comentario(id, fecha, comentario, id_cliente)
  VALUES (?,?,?,?)");
 $ins -> bind_param('issi',$id, $fecha, $comentario, $id_cliente);

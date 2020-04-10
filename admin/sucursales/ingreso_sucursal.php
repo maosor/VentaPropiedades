@@ -3,7 +3,7 @@ include '../extend/funciones.php';
 if (isset($_GET['id']))
   {
     $id = $con->real_escape_string(htmlentities($_GET['id']));
-    $sel_eje = $con->prepare("SELECT id, nombre, telefono FROM sucursal WHERE id = ?");
+    $sel_eje = $con->prepare("SELECT idSucursal, nombre, telefono FROM sucursal WHERE idSucursal = ?");
     $sel_eje->bind_param('i', $id);
     $sel_eje->execute();
     $sel_eje->bind_result( $id, $nombre, $telefono);
