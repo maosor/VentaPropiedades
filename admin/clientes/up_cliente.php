@@ -5,8 +5,8 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   $variable = "$".$campo."='".htmlentities($valor)."';";
   eval($variable);
   }
-  $up = $con->prepare("UPDATE cliente SET nombre=?, telefono1=?, telefono2=?,
-    telefono3=?, email=?, presupuesto_maximo=?, id_ejecutivo_asignado=? WHERE id_cliente=? ");
+  $up = $con->prepare("UPDATE cliente SET Nombre=?, Telefono1=?, Telefono2=?,
+    Telefono3=?, email=?, PresupuestoMaximo=?, idEjecutivoAsignado=? WHERE idCliente =? ");
   $up->bind_param('sssssdii', $nombre, $telefono1, $telefono2, $telefono3, $email,
     $presupuesto_maximo, $id_ejecutivo_asignado,$id);
     if ($up -> execute()) {

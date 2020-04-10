@@ -19,33 +19,34 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   if ($user == null && $pass == null) {
     header('location:../extend/alerta.php?msj=El formato no es correcto&c=salir&p=salir&t=error');
   }else {
-    $sel = $con->query("SELECT id, nombre, apellido1, apellido2, email, password, id_perfil, id_tipo, id_sucursal, foto
-      FROM ejecutivo WHERE borrado= 0 AND activo = 1 AND email = '$usuario' AND password = '$pass2' ");
+    $sel = $con->query("SELECT idEjecutivo, Nombre, Apellido1, Apellido2, email, password, idPerfil, idTipo, idSucursal, foto
+      FROM ejecutivo WHERE Borrado= 0 AND Activo = 1 AND email = '$usuario' AND password = '$pass2' ");
        $row = mysqli_num_rows($sel);
        if ($row == 1) {
          if ($var = $sel->fetch_assoc()) {
-            $id = $var['id'];
-            $nombre = $var['nombre'];
-            $apellido1 = $var['apellido1'];
-            $apellido2 = $var['apellido2'];
+            $id = $var['idEjecutivo'];
+            $nombre = $var['Nombre'];
+            $apellido1 = $var['Apellido1'];
+            $apellido2 = $var['Apellido2'];
             $password = $var['password'];
             $email = $var['email'];
-            $id_perfil = $var['id_perfil'];
-            $id_tipo = $var['id_tipo'];
-            $id_sucursal = $var['id_sucursal'];
+            $id_perfil = $var['idPerfil'];
+            $id_tipo = $var['idTipo'];
+            $id_sucursal = $var['idSucursal'];
             $foto = $var['foto'];
          }
-         if ($email == $usuario && $password == $pass2) {
-            $_SESSION ['id'] = $id;
-            $_SESSION ['nombre'] = $nombre;
-            $_SESSION ['apellido1'] = $apellido1;
-            $_SESSION ['apellido2'] = $apellido2;
+         if (strtoupper($email) == strtoupper($usuario) && $password == $pass2) {
+            $_SESSION ['idEjecutivo'] = $id;
+            $_SESSION ['Nombre'] = $nombre;
+            $_SESSION ['Apellido1'] = $apellido1;
+            $_SESSION ['Apellido2'] = $apellido2;
             $_SESSION ['email'] = $email;
-            $_SESSION ['id_perfil'] = $id_perfil;
-            $_SESSION ['id_tipo'] = $id_tipo;
-            $_SESSION ['id_sucursal'] = $id_sucursal;
+            $_SESSION ['idPerfil'] = $id_perfil;
+            $_SESSION ['idTipo'] = $id_tipo;
+            $_SESSION ['idSucursal'] = $id_sucursal;
             $_SESSION ['foto'] = $foto;
-            header('location:../extend/alerta.php?msj=Bienvenido&c=home&p=home&t=success');
+            header('location:../inicio/index.php');
+            //header('location:../extend/alerta.php?msj=Bienvenido&c=home&p=home&t=success');
            }
            else {
              header('location:../extend/alerta.php?msj=No tienes el permiso para entrar&c=salir&p=salir&t=error');

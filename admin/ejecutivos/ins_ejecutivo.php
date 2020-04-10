@@ -5,13 +5,13 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   $variable = "$".$campo."='".htmlentities($valor)."';";
   eval($variable);
   }
-$id='';
+$id=''; //Generar nuemero consecutivo
 $activo = 1;
 $borrado = 0;
 $foto = 'foto_perfil/perfil.png';
 $pass1 = sha1($pass1);
-$ins = $con->prepare("INSERT INTO ejecutivo VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
-$ins -> bind_param('isssssiiisssiis',$id, $nombre, $apellido1, $apellido2, $email, $pass1,
+$ins = $con->prepare("INSERT INTO ejecutivo SELECT MAX(idEjecutivo)+1, ?,?,?,?,?,?,?,?,?,?,?,?,?,? FROM ejecutivo");
+$ins -> bind_param('sssssiiisssiis', $nombre, $apellido1, $apellido2, $email, $pass1,
    $activo, $id_perfil, $id_tipo, $telefono_principal, $telefono_secundario, $telefono_celular, $borrado,
    $id_sucursal,$foto);
 if ($ins -> execute()) {

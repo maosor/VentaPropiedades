@@ -14,8 +14,8 @@
   </div>
 </div>
 <?php
-$sel = $con->prepare("SELECT e.id,nombre,apellido1,apellido2,email,pe.descripcion,te.descripcion, telefono_principal  FROM ejecutivo e INNER JOIN perfil_ejecutivo pe ON (e.id_perfil= pe.id)
-INNER JOIN tipo_ejecutivo te ON(e.id_tipo= te.id)  WHERE borrado = 0 ");
+$sel = $con->prepare("SELECT e.idEjecutivo,Nombre,Apellido1,Apellido2,email,p.descripcion,t.descripcion, TelefonoPrincipal
+  FROM ejecutivo e INNER JOIN perfil p ON (e.idPerfil = p.id) INNER JOIN tipoejecutivo t ON(e.idTipo = t.idTipoEjecutivo) WHERE Borrado = 0 ");
 $sel -> execute();
 $sel-> store_result();
 $sel -> bind_result($id, $nombre, $apellido1, $apellido2, $email, $perfil,$tipo,$telefono_principal );
@@ -64,11 +64,20 @@ $row = $sel->num_rows;
           $con->close();
            ?>
          </table>
+         <span class="left" id="total_reg"></span>
+        <ul class="pagination pager" id="myPager"></ul>
        </div>
      </div>
    </div>
  </div>
+
 <?php include '../extend/scripts.php'; ?>
+<?php include '../extend/paginacion.php'; ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+      paginar('#tbldatos',20)
+    });
+</script>
 
 </body>
 </html>

@@ -3,8 +3,8 @@ include '../extend/funciones.php';
 if (isset($_GET['id']))
   {
     $id = $con->real_escape_string(htmlentities($_GET['id']));
-    $sel_eje = $con->prepare("SELECT nombre, telefono1, telefono2, telefono3, email, estatus, id_ejecutivo_agrego, presupuesto_maximo,
- id_ejecutivo_asignado, fecha_ingreso, fecha_envio FROM cliente WHERE id_cliente = ? ");
+    $sel_eje = $con->prepare("SELECT Nombre, Telefono1, Telefono2, Telefono3, email, Estatus,
+       idEjecutivoAgrego, PresupuestoMaximo, idEjecutivoAsignado, FechaIngreso, FechaEnvio FROM cliente WHERE idCliente = ? ");
     $sel_eje->bind_param('i', $id);
     $sel_eje->execute();
     $sel_eje->bind_result( $nombre, $telefono1, $telefono2, $telefono3, $email, $estatus, $id_ejecutivo_agrego, $presupuesto_maximo,
@@ -44,7 +44,7 @@ if (isset($_GET['id']))
                   <option value="0" selected disabled>ASIGNAR UN EJECUTIVO</option>
                <?php endif; ?>
                <?php
-               $sel_eje = $con->prepare("SELECT id, nombre FROM ejecutivo ");
+               $sel_eje = $con->prepare("SELECT idEjecutivo, nombre FROM ejecutivo ");
                $sel_eje->execute();
                $sel_eje->bind_result( $id, $ejecutivo);
                 ?>

@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
 $id='';
 $estatus= 'Activo';
 $id_ejecutivo_agrego = $_SESSION['id'];
-$ins = $con->prepare("INSERT INTO cliente(id_cliente, nombre, telefono1, telefono2, telefono3, email, estatus,
- id_ejecutivo_agrego, presupuesto_maximo, id_ejecutivo_asignado)
+$ins = $con->prepare("INSERT INTO cliente(idCliente, Nombre, Telefono1, Telefono2, Telefono3, email, estatus,
+ idEjecutivoAgrego, PresupuestoMaximo, idEjecutivoAsignado)
  VALUES (?,?,?,?,?,?,?,?,?,?)");
 $ins -> bind_param('issssssiii',$id, $nombre, $telefono1, $telefono2, $telefono3, $email, $estatus,
  $id_ejecutivo_agrego, $presupuesto_maximo, $id_ejecutivo_asignado);

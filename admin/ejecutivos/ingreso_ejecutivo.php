@@ -3,9 +3,9 @@ include '../extend/funciones.php';
 if (isset($_GET['id']))
   {
     $id = $con->real_escape_string(htmlentities($_GET['id']));
-    $sel_eje = $con->prepare("SELECT id, nombre, apellido1, apellido2, email, password,
-       activo, id_perfil, id_tipo, telefono_principal, telefono_secundario, telefono_celular,
-       id_sucursal FROM ejecutivo WHERE id = ? AND borrado = 0");
+    $sel_eje = $con->prepare("SELECT idEjecutivo, Nombre, Apellido1, Apellido2, email, password,
+       activo, idPerfil, idTipo,  TelefonoPrincipal, TelefonoSecundario, TelefonoCelular,
+       idSucursal  FROM ejecutivo WHERE idEjecutivo = ? AND Borrado = 0");
     $sel_eje->bind_param('i', $id);
     $sel_eje->execute();
     $sel_eje->bind_result( $id, $nombre, $apellido1, $apellido2, $email, $password,
@@ -44,7 +44,7 @@ if (isset($_GET['id']))
                   <option value="0" selected disabled>SELECCIONE UN PERFIL</option>
                <?php endif; ?>
                <?php
-               $sel_per = $con->prepare("SELECT id, descripcion FROM perfil_ejecutivo ");
+               $sel_per = $con->prepare("SELECT id, descripcion FROM perfil ");
                $sel_per->execute();
                $sel_per->bind_result( $id, $descripcion_perfil);
                 ?>
@@ -62,7 +62,7 @@ if (isset($_GET['id']))
                    <option value="0" selected disabled>SELECCIONE UN TIPO</option>
                 <?php endif;?>
                 <?php
-                $sel_tip = $con->prepare("SELECT id, descripcion FROM tipo_ejecutivo ");
+                $sel_tip = $con->prepare("SELECT idTipoEjecutivo, Descripcion FROM tipoejecutivo ");
                 $sel_tip->execute();
                 $sel_tip->bind_result( $id, $descripcion_tipo);
                 ?>
@@ -80,7 +80,7 @@ if (isset($_GET['id']))
                     <option value="0" selected disabled>SELECCIONE UNA SUCURSAL</option>
                  <?php endif; ?>
                  <?php
-                 $sel_suc = $con->prepare("SELECT id, nombre FROM sucursal ");
+                 $sel_suc = $con->prepare("SELECT idSucursal, Nombre FROM sucursal ");
                  $sel_suc->execute();
                  $sel_suc->bind_result( $id, $nombre_sucursal);
                   ?>
