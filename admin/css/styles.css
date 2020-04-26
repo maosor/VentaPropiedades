@@ -69,3 +69,10 @@ textarea.materialize-textarea:focus:not([readonly]) {
 {
   padding: 5px 5px;
 }
+body{
+  text-transform: none !important;
+}
+.side-nav{
+    text-transform: uppercase !important;
+    font-weight: 500 !important;
+}

@@ -1,140 +1,188 @@
-<?php include '../extend/header.php';
-if (isset($_GET['ope'] )) {
-  $operacion = $con->real_escape_string(htmlentities($_GET['ope']));
-  $sel = $con->prepare("SELECT propiedad, consecutivo,nombre_cliente,calle_num,fraccionamiento,estado,municipio,precio,
-    forma_pago,asesor,tipo_inmueble,operacion,mapa, marcado FROM inventario WHERE estatus = 'ACTIVO' AND operacion = ? ");
-  $sel->bind_param("s", $operacion);
-}else {
-  $sel = $con->prepare("SELECT propiedad, consecutivo,nombre_cliente,calle_num,fraccionamiento,estado,municipio,precio,
-    forma_pago,asesor,tipo_inmueble,operacion,mapa, marcado FROM inventario WHERE estatus = 'ACTIVO' ");
-}
+<?php include '../extend/header.php';?>
+  <style media="screen">
+    html{
+      font-family: "Roboto", sans-serif !important;
+    }
+    input[type="text"]:not(.browser-default){
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      height: 34px;
+      font-size: 14px;
+      margin: 0 5px 0 0;
+    }
+    input[type="text"]:not(.browser-default):focus:not([readonly]){
+      border-color: #66afe9;
+      outline: 0;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+      }
+    .btn-floating i
+    {
+      font-size: 1.1rem;
+    }
+    [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    	position: unset;
+    	opacity: unset;
+    	pointer-events: none;
+    }
+  </style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-bootgrid/1.3.1/jquery.bootgrid.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bootgrid/1.3.1/jquery.bootgrid.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+
+   <div class="table-responsive">
+     <div class="">
+       <a type='button'  href='ingreso_propiedad.php' class='btn-floating green col s4 right'><i class='material-icons'>add</i></a>
+     </div>
+    <table id="propiedadGrid" class="table table-bordered table-striped">
+     <thead>
+      <tr>
+       <th data-column-id="foto" data-formatter="foto" data-sortable="false">Foto</th>
+       <th data-column-id="seg" data-formatter="seg" data-sortable="false"></th>
+       <th data-column-id="idPropiedad" data-type="numeric">ID</th>
+       <th data-column-id="Titulo">Titulo</th>
+       <th data-column-id="Tipo">Tipo</th>
+       <th data-column-id="TotalHabitaciones">Hab</th>
+       <th data-column-id="nombreProvincia">Provincia</th>
+       <th data-column-id="nombreDistrito">Distrito</th>
+       <th data-column-id="PrecioAlquier">Alquiler</th>
+       <th data-column-id="FechaIngreso">Fecha</th>
+       <th data-column-id="nombreEjecutivo">Ejecutivo</th>
+       <th data-column-id="commands" data-formatter="commands" data-sortable="false"></th>
+      </tr>
+     </thead>
+    </table>
+   </div>
+<?php 	include 'filtros.php';
+	if(isset($_GET["idContacto"]))	{ $idContacto = $_GET["idContacto"]; }	else {	$idContacto = '""'; }
 ?>
 
-<br>
-<div class="row">
-  <div class="col s12">
-    <nav class="brown lighten-3" >
-      <div class="nav-wrapper">
-        <div class="input-field">
-          <input type="search"   id="buscar" autocomplete="off"  >
-          <label for="buscar"><i class="material-icons" >search</i></label>
-          <i class="material-icons" >close</i>
-        </div>
-      </div>
-    </nav>
-  </div>
-</div>
-<div class="row">
-  <div class="col s12">
-    <div class="card">
-      <div class="card-content">
-        <form action="excel.php" method="post" target="_blank" id="exportar">
-            <span class="card-title">Propiedades<button class="btn-floating green botonExcel" type="button"
-               name="button"><i class="material-icons">grid_on</i></button>
-               <a href="mapa_completo.php" class="btn btn-floating red" target="-_blank">
-                 <i class="material-icons">map</i></a>
-             </span>
-            <input type="hidden" name="datos" id ="datos">
+<script type="text/javascript" language="javascript" >
+$(document).ready(function(){
+ var propiedadGrid = $('#propiedadGrid').bootgrid({
+  ajax: true,
+  rowSelect: true,
+  post: function()
+  {
+   return{
+    id: "data-propiedad",
+  	finicial	: $('#FechaInicio').data().date,
+  	ffinal	: $('#FechaFinal').data().date,
+  	paramId	: $('#ID').val(),
+  	paramIdAntiguo	: $('#ID_Antiguo').val(),
+  	paramTitulo	: $('#Titulo').val(),
+  	paramRotulo	: $('#Rotulo').val(),
+  	paramCiudad	: $('#Cuidad').val(),
+  	paramBarrio	: $('#Barrio').val(),
+  	paramProvincia	: $('#provincia').val(),
+  	paramCanton	: $('#canton').val(),
+  	paramDistrito	: $('#distrito').val(),
+  	paramTipo	: $('#Tipo').val(),
+  	paramSubTipo	: $('#SubTipo').val(),
+  	paramContacto	: <?php echo $idContacto ?>,
+  	paramEjecutivo	: $('#Ejecutivo').val(),
+  	paramPrecioVentaInic	: $('#precio_de').val(), //hasta 5 000 000
+  	paramPrecioVentaFin	: $('#precio_a').val(), //hasta 5 000 000
+  	paramPrecioAlquilerInic	: $('#Alquiler_de').val(), // 0/1000
+  	paramPrecioAlquilerFin	: $('#Alquiler_a').val(), // 2000/0
+  	paramAreaConstruccionInic	: $('#Area_de').val(),
+  	paramAreaConstruccionFin	: $('#Area_a').val(),
+  	paramTamanoLoteInic	: $('#Tamano_de').val(),
+  	paramTamanoLoteFin	: $('#Tamano_a').val(),
+  	paramDormitorios	: $('#Dormitorios').val(),
+  	paramGaraje		: $('#Garaje').val(),
+    otros: $('#strOtros').val()
+   };
+  },
+  searchSettings: {
+	delay: 100,
+	characters: 3
+  },
+  url: "../extend/fetch.php",
+  formatters: {
+   "commands": function(column, row)
+   {
+	   var strComandos =  "<a type='button' class='btn-floating blue update' data-row-id='"+row.idPropiedad+"'><i class='material-icons'>edit</i></a>" +
+							"&nbsp; <a type='button' class='btn-floating red delete' data-row-id='"+row.idPropiedad+"'><i class='material-icons'>clear</i></a>" ;
+	   return strComandos;
+   },
+   "foto": function(column, row)
+   {
+     return "<a target='_blank' href='detalle_propiedad.php?id="+row.idPropiedad+"'><img class='materialboxed' width='60' src='../fotos/"+row.idPropiedad+"/thumb.jpg'></a>";
 
-        </form>
-        <table class="excel" border="1">
-          <thead>
-            <tr class="cabecera">
-              <th class="borrar">Vista</th>
-              <th></th>
-              <th>Num</th>
-              <th>Cliente</th>
-              <th>Propiedad</th>
-              <th>Precio</th>
-              <th>Credito</th>
-              <th>Asesor</th>
-              <th>Tipo</th>
-              <th class="borrar">Operacion</th>
-              <th colspan="5">Opciones</th>
-            </tr>
-          </thead>
-          <?php
-          $sel->execute();
-          $sel->bind_result($propiedad, $consecutivo,$nombre_cliente,$calle_num,$fraccionamiento,$estado,$municipio,$precio,
-            $forma_pago,$asesor,$tipo_inmueble,$operacion,$mapa, $marcado);
-          while ($sel->fetch()) {?>
-            <tr>
-              <td class="borrar"><button data-target="modal1" onclick="enviar(this.value)"
-                value="<?php echo $propiedad ?>" class="btn modal-trigger btn-floating"><i class="material-icons">
-              visibility</i><?php echo $marcado ?></button></td>
-              <td>
-                <?php if ($marcado == ''): ?>
-                  <a href="marcado.php?id=<?php echo $propiedad ?>&marcado=SI"><i class="small grey-text material-icons">grade</i></a>
-                <?php else: ?>
-                  <a href="marcado.php?id=<?php echo $propiedad ?>&marcado="><i class="small green-text material-icons">grade</i></a>
-                <?php endif; ?>
-              </td>
-              <td><?php echo $consecutivo  ?></td>
-              <td><?php echo $nombre_cliente  ?></td>
-              <td><?php echo $calle_num .' '.$fraccionamiento .' '.$estado .' ,'.$municipio  ?></td>
-              <td><?php echo "¢".number_format($precio ,2); ?></td>
-              <td><?php echo $forma_pago  ?></td>
-              <td><?php echo $asesor  ?></td>
-              <td><?php echo $tipo_inmueble  ?></td>
-              <td><?php echo $operacion  ?></td>
-              <td class="borrar"><a href="imagenes.php?id=<?php echo $propiedad ?>" class="btn-floating pink"><i
-                class="material-icons">image</i></a></td>
-              <td class="borrar"><a href="mapa.php?mapa=<?php echo $mapa ?>" target="_blank" class="btn-floating orange"><i
-                class="material-icons">room</i></a></td>
-              <td class="borrar"><a href="pdf.php?id=<?php echo $propiedad ?>" target="_blank" class="btn-floating green"><i
-                class="material-icons">picture_as_pdf</i></a></td>
-              <td class="borrar"><a href="editar_propiedad.php?id=<?php echo $propiedad ?>" target="_blank" class="btn-floating blue"><i
-                class="material-icons">loop</i></a></td>
-              <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea cancelar la propiedad?',
-                type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Cancelarlo!'
-              }).then((result) => { if (result.value){location.href='cancelar_propiedad.php?id=<?php echo $propiedad ?>&accion=CANCELADO';}})"><i class="material-icons">delete</i></a></td>
+   },
+   "seg": function (column, row) {
+     return "<a type='button' class='btn-floating pink darken-4 comentario' data-row-id='"+row.idPropiedad+"'><i class='material-icons'>insert_comment</i></a>";
+   }
 
-            </tr>
-          <?php }
-          $sel->close();
-          $con->close();
-           ?>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
+ }
+ });
 
-<div id="modal1" class="modal">
-  <div class="modal-content">
-    <h4>Informacion</h4>
-    <div class="res_modal">
+ $('.bootgrid-header .search').css('width','400px');
+ $(document).on("loaded.rs.jquery.bootgrid", function()
+ {
+  propiedadGrid.find(".comentario").on("click", function(event)
+  {
+   var idCliente = $(this).data("row-id");
+   alert('Comentario de cliente #'+idCliente);
+  });
+ });
 
-    </div>
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">CERRAR</a>
-  </div>
-</div>
-<?php include '../extend/scripts.php'; ?>
-<script>
-  $('.modal').modal();
-  function enviar(valor) {
-      $.get('modal.php', {
-        id:valor,
-        beforeSend: function () {
-          $('.res_modal').html('Espere un momento por favor');
-         }
-       }, function (respuesta) {
-            $('.res_modal').html(respuesta);
-      });
-    }
+ $(document).on("loaded.rs.jquery.bootgrid", function()
+ {
+  propiedadGrid.find(".update").on("click", function(event)
+  {
+   var idCliente = $(this).data("row-id");
+   //alert('Edición de cliente #'+idCliente);
+     window.location.href = "ingreso_cliente.php?id="+idCliente;
+  });
+ });
 
-</script>
-<script>
-  $('.botonExcel').click(function () {
-  $('.borrar').remove();
-  $('#datos').val( $("<div>").append($('.excel').eq(0).clone()).html());
-  $('#exportar').submit();
-  setInterval(function(){location.reload();},3000);
+ $(document).on("loaded.rs.jquery.bootgrid", function()
+ {
+  propiedadGrid.find(".delete").on("click", function(event)
+  {
+   if(confirm("¿Esta seguro de borrar el cliente?"))
+   {
+     var idCliente = $(this).data("row-id");
+     window.location.href = "eliminar_cliente.php?id="+idCliente;
+   }
+   else{
+    return false;
+   }
+  });
+ });
 });
-
+$('#filtro').click(function(){
+$.each($("input[name='otros']:checked"), function(){
+  $('#strOtros').val($('#strOtros').val()+','+$(this).val());
+});
+$('#strOtros').val($('#strOtros').val().substring(1,$('#strOtros').val().length));
+$('#propiedadGrid').bootgrid('reload');
+})
 </script>
-
-</body>
-</html>
+<script type="text/javascript">
+    $(function () {
+        $('#finicial').datetimepicker({
+          format: 'L',
+        });
+        $('#ffinal').datetimepicker({
+            format: 'L',
+            useCurrent: false //Important! See issue #1075
+        });
+        $("#finicial").on("dp.change", function (e) {
+            $('#ffinal').data("DateTimePicker").minDate(e.date);
+        });
+        $("#ffinal").on("dp.change", function (e) {
+            $('#finicial').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+</script>

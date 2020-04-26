@@ -15,8 +15,13 @@
     </li>
     <li><a href="../inicio"><i class="material-icons">home</i>INICIO</li></a>
     <li><div class="divider"></div></li>
-    <li><a class="dropdown-button" href="#!" data-activates="mantenimientos"><i class="material-icons">apps</i>Mantenimientos
-    <i class="material-icons right">arrow_drop_down</i></a></li>
+    <li><a class="dropdown-button" href="#!" data-activates="mantenimientos"><i class="material-icons">apps</i>Mantenimientos<i class="material-icons right">arrow_drop_down</i></a></li>
+    <li><div class="divider"></div></li>
+    <li><a href="../clientes"><i class="material-icons">people</i>Clientes</li></a>
+    <li><div class="divider"></div></li>
+    <li><a href="../contactos"><i class="material-icons">perm_contact_calendar</i>Contactos</li></a>
+    <li><div class="divider"></div></li>
+    <li><a href="../propiedades"><i class="material-icons">account_balance</i>Propiedades</li></a>
     <li><div class="divider"></div></li>
   <!--  <li><a href="../ejecutivos"><i class="material-icons">contact_phone</i>Ejecutivos</li></a>
     <li><div class="divider"></div></li>
@@ -41,8 +46,19 @@
   <ul id="mantenimientos" class="dropdown-content">
     <li><a href="../ejecutivos">Ejecutivos</a></li>
     <li><a href="../sucursales">Sucursales</a></li>
-    <li><a href="../tiposyperfiles?a=t">Tipos Ejecutivo</a></li>
-    <li><a href="../tiposyperfiles?a=p">Perfiles Ejecutivo</a></li>
-    <li><a href="../clientes">Clientes</a></li>
-    <li><a href="../contactos">Contactos</a></li>
+    <li><a href="../tiposyperfiles?a=0">Tipos Ejecutivo</a></li>
+    <li><a href="../tiposyperfiles?a=1">Características externas</a></li>
+    <li><a href="../tiposyperfiles?a=2">Características internas</a></li>
+    <li><a href="../tiposyperfiles?a=3">Comodidades</a></li>
+    <li><a href="../tiposyperfiles?a=4">Electrodomésticos</a></li>
+    <li><a href="../tiposyperfiles?a=5">Infraestructura</a></li>
+    <li><a href="../tiposyperfiles?a=6">Legal</a></li>
+    <li><a href="../tiposyperfiles?a=7">Tipo dueños</a></li>
+    <li><a href="../tiposyperfiles?a=8">Tipos pisos</a></li>
+    <li><a href="../tiposyperfiles?a=9">Tipos ubicación</a></li>
+    <li><a href="../tiposyperfiles?a=10">Tipos de propiedades</a></li>
+    <li><a href="../tiposyperfiles?a=11">Subtipos de propiedades</a></li>
+    <li><a href="../tiposyperfiles?a=12">Perfiles Ejecutivo</a></li>
+    <!-- <li><a href="../clientes">Clientes</a></li>
+    <li><a href="../contactos">Contactos</a></li> -->
    </ul>

@@ -77,7 +77,13 @@
     }
     elseif (isset($_GET['a'])) {
       $a = htmlentities($_GET['a']);
-      $dir=$carpeta.$pagina.'?a='.$a;
+      $idTipo = htmlentities($_GET['idTipo']);
+	  if ($a == '11') {
+		$dir=$carpeta.$pagina.'?a='.$a.'&idTipo='.$idTipo;
+	  }
+	  else {
+		$dir=$carpeta.$pagina.'?a='.$a;
+	  }
     }
     else {
       $dir = $carpeta.$pagina;

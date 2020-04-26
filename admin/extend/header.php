@@ -16,6 +16,10 @@ if (!isset($_SESSION['email'])){
  <link rel="stylesheet" href="../css/materialize.min.css" />
  <link href="../css/styles.css" rel="stylesheet">
  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <link href="../css/nouislider.min.css" rel="stylesheet">
+<script src="../js/nouislider.min.js"></script>
+<script src="../js/wNumb.min.js"></script>
+
  <link rel="shortcut icon" href="/favicon.ico" />
  <style media="screen">
  header, main, footer {
